@@ -6,9 +6,9 @@ import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
 import MainPageScreen from './screens/MainPageScreen';
 import MyPageScreen from './screens/MyPageScreen';
-import { StackParamList } from './types';
+import { HomeStackParamList } from './types';
 
-const Stack = createNativeStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator<HomeStackParamList>();
 
 const App = () => (
   <NavigationContainer>
