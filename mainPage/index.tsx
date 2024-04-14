@@ -1,25 +1,22 @@
-import { styled } from 'nativewind';
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import Header from './Header';
 import Body from './Body';
 import { MainPageScreenProps } from '../types';
-import CreateIcon from '../assets/images/icon_plus.svg'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Footer from './Footer';
 
 function MainPage(props : MainPageScreenProps) {
     const {navigation} = props;
 
     return (
-        <View className="flex flex-col h-screen w-screen">
-            <Header />
-            <Body />
-            <Pressable
-                className="z-10 w-auto h-auto opacity-70"
-                onPress={() => navigation.navigate('SurveyCreatePage')}
-            >
-                <CreateIcon width={80} height={80} />
-            </Pressable>
-        </View>
+        <SafeAreaView>
+            <View className="flex flex-col h-screen w-screen bg-main-background">
+                <Header navigation={navigation} />
+                <Body />
+                <Footer/>
+            </View>
+        </SafeAreaView>
     );
 }
 
