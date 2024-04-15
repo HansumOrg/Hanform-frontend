@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView, ScrollView, StatusBar, Text, View } from 'react-native';
 import { MainStackParamList } from '../types';
-import MainPage from '../mainPage/index';
+import MainPage from '../mainPage/MainPage';
 import SurveyCreatePage from '../mainPage/SurveyCreatePage';
 
 
