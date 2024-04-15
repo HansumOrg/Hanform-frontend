@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView, ScrollView, StatusBar, Text, View } from 'react-native';
 import { MainStackParamList } from '../types';
 import MainPage from '../mainPage/index';
-import SurveyCreatePage from '../mainPage/SurveyCreatePage';
 
 
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -17,7 +16,6 @@ export default function MainPageScreen() {
       }}
     >
       <Stack.Screen name="Main" component={MainPage} />
-      <Stack.Screen name="SurveyCreatePage" component={SurveyCreatePage} />
     </Stack.Navigator>
   );
 }

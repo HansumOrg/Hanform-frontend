@@ -11,7 +11,6 @@ export interface HomeStackParamList extends ParamListBase {
 
 export interface MainStackParamList extends ParamListBase {
     Main: undefined;
-    Survey: undefined;
 }
 
 export interface HomeScreenProps {

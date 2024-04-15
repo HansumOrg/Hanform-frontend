@@ -19,7 +19,7 @@ function Header({navigation}: HeaderProps) {
                 </Pressable>
             </View>
             <View className="flex flex-col w-[70%] h-full justify-center">
-                <TextInput className="text-[25px]" editable={is_editable} ></TextInput>
+                <TextInput className="text-[22px]" editable={is_editable} placeholder="설문지 제목을 입력하세요."></TextInput>
             </View>
             <View className="flex flex-col h-full w-auto justify-center">
                 <Pressable onPress={() => {is_editable ? is_editable : setIsEditable(!is_editable)}}>

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StatusBar, View, Text } from 'react-native';
+import { Pressable, ScrollView, StatusBar, View, Text, TextInput } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import CreateIcon from '../assets/images/icon_plus.svg'
 import MultipleIcon from '../assets/images/icon_checkbox.svg'
 import UploadIcon from '../assets/images/icon_file.svg'
 import SubjectiveIcon from '../assets/images/icon_subjective.svg'
+import EssentialIcon from '../assets/images/icon_essential.svg'
+import DeleteIcon from '../assets/images/icon_delete.svg'
+import CheckboxIcon from '../assets/images/icon_unfilledCheckbox.svg'
 
 
 interface BoxProps{
@@ -13,8 +16,26 @@ interface BoxProps{
 
 const multipleBox = (props : BoxProps) => {
     return (
-        <View className="flex w-11/12 h-12 bg-white rounded">
-            <Text>{(props.index)+1}.객관식 문항입니다.</Text>
+        <View className="flex flex-col w-11/12 h-48 bg-white rounded-2xl items-center">
+            <View className="flex flex-row justify-between w-full top-4 h-12">
+                <Text className="font text-2xl font-bold px-2">{(props.index)+1}.</Text>
+                <View className="flex flex-row">
+                    <Text className="font font-bold px-2">필수 :</Text>
+                    <Pressable className="flex py-1" >
+                        <EssentialIcon width={30} height={14}/>
+                    </Pressable>
+                    <Pressable className="flex justify-self-end px-3">
+                        <DeleteIcon width={20} height={20}/>
+                    </Pressable>
+                </View>
+            </View>   
+            <View className="flex h-20 w-5/6 bottom-0">
+                    <TextInput className="font text-[20px] border-b-2 border-slate-400" placeholder="제목을 입력하세요."></TextInput>
+            </View>
+            <View className="flex flex-row w-11/12 h-10">
+                <View className="p-2"><CheckboxIcon width={18} height={18}/></View>
+                <TextInput className="font text-[15px] w-10/12 justify-self-end border-b-2 border-slate-400" placeholder="선택지를 추가하세요."></TextInput>
+            </View>
         </View>
     );
 }
@@ -29,18 +50,35 @@ const uploadBox = (props : BoxProps) => {
 
 const subjectiveBox = (props : BoxProps) => {
     return (
-        <View className="flex w-11/12 h-12 bg-white rounded">
-            <Text>{(props.index)+1}.주관식 문항입니다.</Text>
+        <View className="flex flex-col w-11/12 h-30 bg-white rounded-2xl items-center">
+            <View className="flex flex-row justify-between w-full top-4 h-12">
+                <Text className="font text-2xl font-bold px-2">{(props.index)+1}.</Text>
+                <View className="flex flex-row">
+                    <Text className="font font-bold px-2">필수 :</Text>
+                    <Pressable className="flex py-1" >
+                        <EssentialIcon width={30} height={14}/>
+                    </Pressable>
+                    <Pressable className="flex justify-self-end px-3">
+                        <DeleteIcon width={20} height={20}/>
+                    </Pressable>
+                </View>
+            </View>   
+            <View className="flex h-20 w-5/6 bottom-0">
+                    <TextInput className="font text-[20px] border-b-2 border-slate-400" placeholder="제목을 입력하세요."></TextInput>
+            </View>
+            <View className="flex flex-row w-11/12 h-10">
+
+            </View>
         </View>
     );
 }
 
 function Body() {
     const [showSurvey, setShowSurvey] = useState(false);
-    const [surveyContents, setSurveyContents] = useState([]);
+    const [surveyContents, setSurveyContents] = useState<string[]>([]);
     let height = 0;
     
-    const addContent = (content) => {
+    const addContent = (content : string) => {
         setSurveyContents([...surveyContents, content]);
     }
     
@@ -53,11 +91,11 @@ function Body() {
             const renderContent = () => {
                 console.log(index,content);
                 if (content === '객관식') {
-                    return <View className="flex h-auto w-full items-center" key={index}>{multipleBox({index})}</View>;
+                    return <View className="flex h-auto w-full my-2 items-center" key={index}>{multipleBox({index})}</View>;
                 } else if (content === '파일 업로드') {
-                    return <View className="flex h-auto w-full items-center" key={index}>{uploadBox({index})}</View>;
+                    return <View className="flex h-auto w-full my-2 items-center" key={index}>{uploadBox({index})}</View>;
                 } else {
-                    return <View className="flex h-auto w-full items-center" key={index}>{subjectiveBox({index})}</View>;
+                    return <View className="flex h-auto w-full my-2 items-center" key={index}>{subjectiveBox({index})}</View>;
                 }
             };
                 return renderContent();
