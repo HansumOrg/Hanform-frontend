@@ -37,10 +37,10 @@ const subjectiveBox = (props : BoxProps) => {
 
 function Body() {
     const [showSurvey, setShowSurvey] = useState(false);
-    const [surveyContents, setSurveyContents] = useState([]);
+    const [surveyContents, setSurveyContents] = useState<string[]>([]); // Add type annotation for surveyContents
     let height = 0;
     
-    const addContent = (content) => {
+    const addContent = (content: string) => { // Add type annotation for content parameter
         setSurveyContents([...surveyContents, content]);
     }
     
