@@ -32,7 +32,7 @@ export default function App() {
   const SplashScreen = (
     <SafeAreaView>
       <Animated.View
-        className="flex justify-center items-center h-screen pb-48 gap-5"
+        className="flex justify-center items-center h-screen pb-48 gap-5 bg-white"
         style={{ opacity: fadeOut }}
       >
         <Text className="text-5xl text-[#1A5BAB] font-extrabold">Han Form</Text>
