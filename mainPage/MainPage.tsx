@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import Header from './Header';
-import Body from './Body';
+import Header from './MainpageHeader';
+import Body from './Mainpagebody';
 import { MainPageScreenProps } from '../types';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Footer from './Footer';
