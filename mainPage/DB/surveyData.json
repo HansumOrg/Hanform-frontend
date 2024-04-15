@@ -1,0 +1,41 @@
+{
+    "users": [
+        {"userId": "user01", "id": "example01", "password": "password01", "nickname": "User01"},
+        {"userId": "user02", "id": "example02", "password": "password02", "nickname": "User02"},
+        {"userId": "user03", "id": "example03", "password": "password03", "nickname": "User03"},
+        {"userId": "user04", "id": "example04", "password": "password04", "nickname": "User04"},
+        {"userId": "user05", "id": "example05", "password": "password05", "nickname": "User05"}
+    ],
+    "surveys": [
+        {"surveyId": 1, "userId": "user01", "title": "Favorite Programming Language", "creationDate": "2024-04-01T08:30:00Z"},
+        {"surveyId": 2, "userId": "user01", "title": "Best IDEs for Development", "creationDate": "2024-04-02T09:00:00Z"},
+        {"surveyId": 3, "userId": "user01", "title": "Preferred OS for Coding", "creationDate": "2024-04-03T09:00:00Z"},
+        {"surveyId": 4, "userId": "user02", "title": "Best Coffee Shops", "creationDate": "2024-04-04T09:00:00Z"},
+        {"surveyId": 5, "userId": "user02", "title": "Favorite Types of Coffee", "creationDate": "2024-04-05T09:00:00Z"},
+        {"surveyId": 6, "userId": "user03", "title": "Favorite Movie Genres", "creationDate": "2024-04-06T09:00:00Z"},
+        {"surveyId": 7, "userId": "user04", "title": "Preferred Streaming Services", "creationDate": "2024-04-07T09:00:00Z"},
+        {"surveyId": 8, "userId": "user04", "title": "Best Video Game of the Year", "creationDate": "2024-04-08T09:00:00Z"},
+        {"surveyId": 9, "userId": "user04", "title": "Favorite Book Series", "creationDate": "2024-04-09T09:00:00Z"},
+        {"surveyId": 10, "userId": "user05", "title": "Top Destinations for Travel", "creationDate": "2024-04-10T09:00:00Z"}
+    ],
+    "questions": [
+        {"questionId": 1, "surveyId": 1, "questionNumber": 1, "description": "What is your favorite programming language and why?", "questionType": "open-ended", "isRequired": true},
+        {"questionId": 2, "surveyId": 1, "questionNumber": 2, "description": "Which IDE do you use the most?", "questionType": "single-choice", "isRequired": true},
+        {"questionId": 3, "surveyId": 2, "questionNumber": 1, "description": "What OS do you prefer for coding?", "questionType": "single-choice", "isRequired": false},
+        {"questionId": 4, "surveyId": 2, "questionNumber": 2, "description": "Which compiler or interpreter do you prefer?", "questionType": "single-choice", "isRequired": true},
+        {"questionId": 5, "surveyId": 4, "questionNumber": 1, "description": "Which coffee shop do you visit most frequently?", "questionType": "single-choice", "isRequired": false},
+        {"questionId": 6, "surveyId": 5, "questionNumber": 1, "description": "What type of coffee do you prefer?", "questionType": "single-choice", "isRequired": true}
+    ],
+    "options": [
+        {"optionId": 1, "questionId": 2, "optionNumber": 1, "optionDescription": "Visual Studio Code"},
+        {"optionId": 2, "questionId": 2, "optionNumber": 2, "optionDescription": "IntelliJ IDEA"},
+        {"optionId": 3, "questionId": 3, "optionNumber": 1, "optionDescription": "Windows"},
+        {"optionId": 4, "questionId": 3, "optionNumber": 2, "optionDescription": "MacOS"},
+        {"optionId": 5, "questionId": 4, "optionNumber": 1, "optionDescription": "GCC"},
+        {"optionId": 6, "questionId": 4, "optionNumber": 2, "optionDescription": "Clang"}
+    ],
+    "answers": [
+        {"answerId": 1, "questionId": 1, "userId": "user01", "answerContent": "I like Python because it's easy to read and powerful."},
+        {"answerId": 2, "questionId": 5, "userId": "user02", "answerContent": "I frequently visit Starbucks for the atmosphere."}
+    ]
+}
