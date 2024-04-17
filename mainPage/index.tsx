@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text } from 'react-native';
 import Header from './Header';
 import Body from './Body';
 import { MainPageScreenProps } from '../types';
@@ -12,8 +12,8 @@ function MainPage(props : MainPageScreenProps) {
     return (
         <SafeAreaView>
             <View className="flex flex-col h-screen w-screen bg-main-background">
-                <Header navigation={navigation} />
-                <Body />
+                {/* <Header navigation={navigation} /> */}
+                <Body navigation = {navigation}/>
                 <Footer/>
             </View>
         </SafeAreaView>

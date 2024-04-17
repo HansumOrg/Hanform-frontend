@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Pressable, ScrollView, StatusBar, View, Text, TextInput } from 'react-native';
+import { SurveyContext } from '../App';
 import { Svg, Circle } from 'react-native-svg';
 import CreateIcon from '../assets/images/icon_plus.svg'
 import MultipleIcon from '../assets/images/icon_checkbox.svg'
@@ -11,7 +12,15 @@ import DeleteIcon from '../assets/images/icon_delete.svg'
 import CheckboxIcon from '../assets/images/icon_unfilledCheckbox.svg'
 import SurveyAddIcon from '../assets/images/icon_surveyPlus.svg'
 import SurveyDeleteIcon from '../assets/images/icon_crossbutton.svg'
+import LeftButton from '../assets/images/chevron-left.svg';
+import PencilIcon from '../assets/images/icon_pencil.svg';
+import ViewIcon from '../assets/images/icon_eye.svg';
+import { NavigationProp } from '@react-navigation/native';
 
+
+interface HeaderProps {
+    navigation: NavigationProp<any>;
+  }
 
 interface BoxProps{
     index:number;
@@ -102,14 +111,18 @@ const subjectiveBox = (props : BoxProps) => {
     );
 }
 
-function Body() {
-    const [showSurvey, setShowSurvey] = useState(false);
-    const [surveyContents, setSurveyContents] = useState<{ content: string, is_essential: boolean, title:string, surveyChoices: string[] }[]>([]);
-    const [showConfirm, setShowConfirm] = useState(false);
 
-    // useEffect(() => {
-    //     console.log(surveyContents);
-    // }, [surveyContents]);
+function Body({navigation}:HeaderProps) {
+    const [is_editable, setIsEditable] = useState(true);
+    const [showSurvey, setShowSurvey] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [mainTitle, setMainTitle] = useState('Default');
+    const [surveyContents, setSurveyContents] = useState<{ content: string, is_essential: boolean, title:string, surveyChoices: string[] }[]>([]);
+    const { everySurveyContents, setEverySurveyContents } = useContext(SurveyContext);
+     
+    const handlePress = () =>{
+        setEverySurveyContents([...everySurveyContents, {mainTitle, surveyContents}]);
+    }
 
     const addContent = (content: string) => {
         setSurveyContents([...surveyContents, { content, is_essential: false, title:"", surveyChoices: [""] }]);
@@ -154,7 +167,6 @@ function Body() {
         const newContents = [...surveyContents];
         let check = false;
         for (let i = 0; i < newContents.length; i++) {
-            console.log(newContents[i]);
             if (newContents[i].title === "" || newContents[i].surveyChoices.length === 0 || newContents[i].surveyChoices.includes("")) {
                 check = false;
                 break;
@@ -166,102 +178,127 @@ function Body() {
     }
 
     return (
-        <View className="flex w-full h-3/4">
-            <StatusBar barStyle="default" />
-            <ScrollView>
-            <View className="flex flex-col space-y-2 h-full items-center">
-            {surveyContents.map((item, index) => {
-            const toggleEssential = () => {
-            const newContents = [...surveyContents];
-            newContents[index].is_essential = !newContents[index].is_essential;
-            setSurveyContents(newContents);
-        };
-
-        const renderContent = () => {
-            if (item.content === '객관식') {
-                return <View className="flex h-auto w-full my-2 items-center" key={index}>
-                    {
-                        multipleBox({
-                            index, is_essential: item.is_essential, title:item.title ,surveyChoices: item.surveyChoices, toggleEssential,
-                            addChoice: () => addChoice(index),
-                            removeChoice: (choiceIndex) => removeChoice(index, choiceIndex),
-                            updateChoices: (choiceIndex, content) => {
-                                updateChoices(index, choiceIndex, content);
-                            },
-                            updateTitle: (index, title) => {
-                                updateTitle(index, title);
-                            },
-                            removeContent: (index) => {
-                                removeContent(index);
-                            }
-                        })
-                    }</View>;
-            } else if (item.content === '파일 업로드') {
-                return <View className="flex h-auto w-full my-2 items-center" key={index}>
-                    {uploadBox({
-                            index, is_essential: item.is_essential, title:item.title ,surveyChoices: item.surveyChoices, toggleEssential,
-                            addChoice: () => addChoice(index),
-                            removeChoice: (choiceIndex) => removeChoice(index, choiceIndex),
-                            updateChoices: (choiceIndex, content) => {
-                                updateChoices(index, choiceIndex, content);
-                            },
-                            updateTitle: (index, title) => {
-                                updateTitle(index, title);
-                            },
-                            removeContent: (index) => {
-                                removeContent(index);
-                            }
-                        })}</View>;
-            } else {
-                return <View className="flex h-auto w-full my-2 items-center" key={index}>
-                    {subjectiveBox({
-                            index, is_essential: item.is_essential, title:item.title ,surveyChoices: ["주관식"], toggleEssential,
-                            addChoice: () => addChoice(index),
-                            removeChoice: (choiceIndex) => removeChoice(index, choiceIndex),
-                            updateChoices: (choiceIndex, content) => {
-                                updateChoices(index, choiceIndex, content);
-                            },
-                            updateTitle: (index, title) => {
-                                updateTitle(index, title);
-                            },
-                            removeContent: (index) => {
-                                removeContent(index);
-                            }
-                        })}</View>;
-            }
-        };
-        return renderContent();
-            })}
-                <View className="flex h-12 w-full items-center">
-                    <Pressable className={`flex w-11/12 h-full justify-center rounded bg-${showConfirm ? 'enable':'disable'}-button-background`}>
-                        <Text className="text-center text-[15px] font-bold text-white">확인하기</Text>
+        <View>
+            <View className="flex flex-row w-full h-20 min-w-80 px-4 justify-between">
+            <View className="flex flex-col w-auto h-full justify-center">
+                <Pressable onPress={() => navigation.goBack()}>
+                    <LeftButton width={15} height={30}/>
+                </Pressable>
+            </View>
+        <View className="flex flex-col w-[70%] h-full justify-center">
+            <TextInput className="text-[22px]" editable={is_editable} placeholder="설문지 제목을 입력하세요." onChangeText={(text)=>setMainTitle(text)}></TextInput>
+        </View>
+        <View className="flex flex-col h-full w-auto justify-center">
+            <Pressable onPress={() => {is_editable ? is_editable : setIsEditable(!is_editable)}}>
+                <PencilIcon width={25} height={25} preserveAspectRatio='none'/>
+                    </Pressable>
+                </View>
+                <View className="flex flex-col h-full w-auto justify-center">
+                    <Pressable onPress={()=>{is_editable? setIsEditable(!is_editable) : is_editable}}>
+                        <ViewIcon width={25} height={20} preserveAspectRatio='none'/>
                     </Pressable>
                 </View>
             </View>
-            </ScrollView>
-            {showSurvey && 
-                <View className ="absolute z-5 w-full bottom-10 h-40 items-center justify-center">
-                    <View className="flex px-12 flex-row w-5/6 h-3/5 bg-enable-button-background opacity-60 items-center justify-around rounded">
-                        <Pressable className="flex flex-col items-center" onPress={() => addContent('객관식')}>
-                            <MultipleIcon width={36} height={36}/>
-                            <Text className="text-center text-[12px] font-bold">객관식</Text>
-                        </Pressable>
-                        <Pressable className="flex flex-col items-center">
-                            <UploadIcon width={36} height={36} onPress={() => addContent('파일 업로드')}/>
-                            <Text className="text-center text-[12px] font-bold">파일 업로드</Text>
-                        </Pressable>
-                        <Pressable className="flex flex-col items-center" onPress={() => addContent('주관식')}>
-                            <SubjectiveIcon width={36} height={36}/>
-                            <Text className="text-center text-[12px] font-bold">주관식</Text>
-                        </Pressable>
+            <View className="flex w-full h-3/4">
+                <StatusBar barStyle="default" />
+                <ScrollView>
+                <View className="flex flex-col space-y-2 h-full items-center">
+                {surveyContents.map((item, index) => {
+                const toggleEssential = () => {
+                const newContents = [...surveyContents];
+                newContents[index].is_essential = !newContents[index].is_essential;
+                setSurveyContents(newContents);
+            };
 
+            const renderContent = () => {
+                if (item.content === '객관식') {
+                    return <View className="flex h-auto w-full my-2 items-center" key={index}>
+                        {
+                            multipleBox({
+                                index, is_essential: item.is_essential, title:item.title ,surveyChoices: item.surveyChoices, toggleEssential,
+                                addChoice: () => addChoice(index),
+                                removeChoice: (choiceIndex) => removeChoice(index, choiceIndex),
+                                updateChoices: (choiceIndex, content) => {
+                                    updateChoices(index, choiceIndex, content);
+                                },
+                                updateTitle: (index, title) => {
+                                    updateTitle(index, title);
+                                },
+                                removeContent: (index) => {
+                                    removeContent(index);
+                                }
+                            })
+                        }</View>;
+                } else if (item.content === '파일 업로드') {
+                    return <View className="flex h-auto w-full my-2 items-center" key={index}>
+                        {uploadBox({
+                                index, is_essential: item.is_essential, title:item.title ,surveyChoices: item.surveyChoices, toggleEssential,
+                                addChoice: () => addChoice(index),
+                                removeChoice: (choiceIndex) => removeChoice(index, choiceIndex),
+                                updateChoices: (choiceIndex, content) => {
+                                    updateChoices(index, choiceIndex, content);
+                                },
+                                updateTitle: (index, title) => {
+                                    updateTitle(index, title);
+                                },
+                                removeContent: (index) => {
+                                    removeContent(index);
+                                }
+                            })}</View>;
+                } else {
+                    return <View className="flex h-auto w-full my-2 items-center" key={index}>
+                        {subjectiveBox({
+                                index, is_essential: item.is_essential, title:item.title ,surveyChoices: ["주관식"], toggleEssential,
+                                addChoice: () => addChoice(index),
+                                removeChoice: (choiceIndex) => removeChoice(index, choiceIndex),
+                                updateChoices: (choiceIndex, content) => {
+                                    updateChoices(index, choiceIndex, content);
+                                },
+                                updateTitle: (index, title) => {
+                                    updateTitle(index, title);
+                                },
+                                removeContent: (index) => {
+                                    removeContent(index);
+                                }
+                            })}</View>;
+                }
+            };
+            return renderContent();
+                })}
+                    <View className="flex h-12 w-full items-center">
+                    <Pressable 
+                    className={`flex w-11/12 h-full justify-center rounded bg-${showConfirm ? 'enable':'disable'}-button-background`}
+                    onPress={showConfirm ? () => { handlePress(); navigation.goBack(); } : undefined}
+                >
+                    <Text className="text-center text-[15px] font-bold text-white">확인하기</Text>
+                </Pressable>
                     </View>
-                </View>}
-            <View className="absolute h-20 z-10 w-auto bottom-5 right-0 opacity-80">
-                <Svg height="80" width="80">
-                        <Circle cx="40" cy="43" r="26" onPress={() => setShowSurvey(!showSurvey)} />
-                        <CreateIcon width={80} height={80}/>
-                    </Svg>
+                </View>
+                </ScrollView>
+                {showSurvey && 
+                    <View className ="absolute z-5 w-full bottom-10 h-40 items-center justify-center">
+                        <View className="flex px-12 flex-row w-5/6 h-3/5 bg-enable-button-background opacity-60 items-center justify-around rounded">
+                            <Pressable className="flex flex-col items-center" onPress={() => addContent('객관식')}>
+                                <MultipleIcon width={36} height={36}/>
+                                <Text className="text-center text-[12px] font-bold">객관식</Text>
+                            </Pressable>
+                            <Pressable className="flex flex-col items-center">
+                                <UploadIcon width={36} height={36} onPress={() => addContent('파일 업로드')}/>
+                                <Text className="text-center text-[12px] font-bold">파일 업로드</Text>
+                            </Pressable>
+                            <Pressable className="flex flex-col items-center" onPress={() => addContent('주관식')}>
+                                <SubjectiveIcon width={36} height={36}/>
+                                <Text className="text-center text-[12px] font-bold">주관식</Text>
+                            </Pressable>
+
+                        </View>
+                    </View>}
+                <View className="absolute h-20 z-10 w-auto bottom-5 right-0 opacity-80">
+                    <Svg height="80" width="80">
+                            <Circle cx="40" cy="43" r="26" onPress={() => setShowSurvey(!showSurvey)} />
+                            <CreateIcon width={80} height={80}/>
+                        </Svg>
+                </View>
             </View>
         </View>
     );

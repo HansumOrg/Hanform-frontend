@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
@@ -8,9 +8,18 @@ import MainPageScreen from './screens/MainPageScreen';
 import MyPageScreen from './screens/MyPageScreen';
 import { HomeStackParamList } from './types';
 
+
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
-const App = () => (
+export const SurveyContext = createContext({
+  everySurveyContents: [],
+  setEverySurveyContents: (_value: any) => {},
+});
+const App = () => {
+  const [everySurveyContents, setEverySurveyContents] = useState([]);
+  console.log(JSON.stringify(everySurveyContents, null, 2));
+  return(
+  <SurveyContext.Provider value={{ everySurveyContents, setEverySurveyContents }}>
   <NavigationContainer>
     <Stack.Navigator
       initialRouteName="Home"
@@ -26,6 +35,7 @@ const App = () => (
       <Stack.Screen name="MyPage" component={MyPageScreen} />
     </Stack.Navigator>
   </NavigationContainer>
-);
-
+  </SurveyContext.Provider>
+  )
+};
 export default App;
