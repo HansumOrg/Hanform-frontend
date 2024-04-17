@@ -5,25 +5,30 @@ import CreateIcon from '../assets/images/icon_plus.svg'
 import MultipleIcon from '../assets/images/icon_checkbox.svg'
 import UploadIcon from '../assets/images/icon_file.svg'
 import SubjectiveIcon from '../assets/images/icon_subjective.svg'
-import EssentialIcon from '../assets/images/icon_essential.svg'
+import EssentialOnIcon from '../assets/images/icon_essential.svg'
+import EssentialOffIcon from '../assets/images/icon_essential_off.svg'
 import DeleteIcon from '../assets/images/icon_delete.svg'
 import CheckboxIcon from '../assets/images/icon_unfilledCheckbox.svg'
 
 
 interface BoxProps{
     index:number;
+    is_essential : boolean;
+    surveyChoices? : string[]; 
+    toggleEssential : () => void;
 }
 
 const multipleBox = (props : BoxProps) => {
+    
     return (
-        <View className="flex flex-col w-11/12 h-48 bg-white rounded-2xl items-center">
+        <View className="flex flex-col w-11/12 h-auto bg-white rounded-2xl items-center">
             <View className="flex flex-row justify-between w-full top-4 h-12">
                 <Text className="font text-2xl font-bold px-2">{(props.index)+1}.</Text>
                 <View className="flex flex-row">
                     <Text className="font font-bold px-2">필수 :</Text>
-                    <Pressable className="flex py-1" >
-                        <EssentialIcon width={30} height={14}/>
-                    </Pressable>
+                    <Pressable className="flex py-1" onPress={props.toggleEssential}>
+                    {props.is_essential ? <EssentialOnIcon width={30} height={14}/> : <EssentialOffIcon width={30} height={14}/>}
+                    </Pressable>              
                     <Pressable className="flex justify-self-end px-3">
                         <DeleteIcon width={20} height={20}/>
                     </Pressable>
@@ -32,7 +37,7 @@ const multipleBox = (props : BoxProps) => {
             <View className="flex h-20 w-5/6 bottom-0">
                     <TextInput className="font text-[20px] border-b-2 border-slate-400" placeholder="제목을 입력하세요."></TextInput>
             </View>
-            <View className="flex flex-row w-11/12 h-10">
+            <View className="flex flex-row w-11/12 h-10 my-3">
                 <View className="p-2"><CheckboxIcon width={18} height={18}/></View>
                 <TextInput className="font text-[15px] w-10/12 justify-self-end border-b-2 border-slate-400" placeholder="선택지를 추가하세요."></TextInput>
             </View>
@@ -50,14 +55,14 @@ const uploadBox = (props : BoxProps) => {
 
 const subjectiveBox = (props : BoxProps) => {
     return (
-        <View className="flex flex-col w-11/12 h-30 bg-white rounded-2xl items-center">
+        <View className="flex flex-col w-11/12 h-auto bg-white rounded-2xl items-center">
             <View className="flex flex-row justify-between w-full top-4 h-12">
                 <Text className="font text-2xl font-bold px-2">{(props.index)+1}.</Text>
                 <View className="flex flex-row">
                     <Text className="font font-bold px-2">필수 :</Text>
-                    <Pressable className="flex py-1" >
-                        <EssentialIcon width={30} height={14}/>
-                    </Pressable>
+                    <Pressable className="flex py-1" onPress={props.toggleEssential}>
+                    {props.is_essential ? <EssentialOnIcon width={30} height={14}/> : <EssentialOffIcon width={30} height={14}/>}
+                    </Pressable>   
                     <Pressable className="flex justify-self-end px-3">
                         <DeleteIcon width={20} height={20}/>
                     </Pressable>
@@ -66,8 +71,10 @@ const subjectiveBox = (props : BoxProps) => {
             <View className="flex h-20 w-5/6 bottom-0">
                     <TextInput className="font text-[20px] border-b-2 border-slate-400" placeholder="제목을 입력하세요."></TextInput>
             </View>
-            <View className="flex flex-row w-11/12 h-10">
-
+            <View className="flex flex-row w-11/12 h-12 my-2">
+                <View className="flex w-full h-10 items-center">
+                    <TextInput className="font text-[15px] w-11/12 border-b-2 border-slate-400" placeholder="선택지를 추가하세요."></TextInput>
+                </View>
             </View>
         </View>
     );
@@ -75,11 +82,11 @@ const subjectiveBox = (props : BoxProps) => {
 
 function Body() {
     const [showSurvey, setShowSurvey] = useState(false);
-    const [surveyContents, setSurveyContents] = useState<string[]>([]);
+    const [surveyContents, setSurveyContents] = useState<{ content: string, is_essential: boolean }[]>([]);
     let height = 0;
     
-    const addContent = (content : string) => {
-        setSurveyContents([...surveyContents, content]);
+    const addContent = (content: string) => {
+        setSurveyContents([...surveyContents, { content, is_essential: false }]);
     }
     
     return (
@@ -87,18 +94,25 @@ function Body() {
             <StatusBar barStyle="default" />
             <ScrollView>
             <View className="flex flex-col space-y-2 h-full items-center">
-            {surveyContents.map((content, index) => {
-            const renderContent = () => {
-                console.log(index,content);
-                if (content === '객관식') {
-                    return <View className="flex h-auto w-full my-2 items-center" key={index}>{multipleBox({index})}</View>;
-                } else if (content === '파일 업로드') {
-                    return <View className="flex h-auto w-full my-2 items-center" key={index}>{uploadBox({index})}</View>;
-                } else {
-                    return <View className="flex h-auto w-full my-2 items-center" key={index}>{subjectiveBox({index})}</View>;
-                }
-            };
-                return renderContent();
+            {surveyContents.map((item, index) => {
+            const toggleEssential = () => {
+            const newContents = [...surveyContents];
+            newContents[index].is_essential = !newContents[index].is_essential;
+            setSurveyContents(newContents);
+        };
+
+        const renderContent = () => {
+            console.log(index, item.content,);
+            if (item.content === '객관식') {
+                return <View className="flex h-auto w-full my-2 items-center" key={index}>{multipleBox({index, is_essential: item.is_essential, toggleEssential})}</View>;
+            } else if (item.content === '파일 업로드') {
+                return <View className="flex h-auto w-full my-2 items-center" key={index}>{uploadBox({index, is_essential: item.is_essential, toggleEssential})}</View>;
+            } else {
+                return <View className="flex h-auto w-full my-2 items-center" key={index}>{subjectiveBox({index, is_essential: item.is_essential, toggleEssential})}</View>;
+            }
+        };
+
+        return renderContent();
             })}
                 <View className="flex h-12 w-full items-center">
                     <Pressable className="flex w-11/12 h-full justify-center rounded bg-disable-button-background" >
