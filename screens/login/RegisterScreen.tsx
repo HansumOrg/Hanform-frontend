@@ -31,12 +31,9 @@ export default function RegisterScreen(props: LoginScreenProps) {
           <Pressable
             className="bg-[#1A5BAB] w-full mt-4 h-10 flex items-center justify-center rounded-md"
             onPress={() => {
-              // 회원가입 성공 시 Login으로 이동
-              // navigation.navigate('Login');
-              // 아래 코드는 뒤돌아가기를 방지하기 위해 reset을 사용합니다.
               navigation.reset({
-                index: 0,
-                routes: [{ name: 'Login' }],
+                index: 1,
+                routes: [{ name: 'LoginMain' }, { name: 'Login' }],
               });
             }}
           >

@@ -11,7 +11,7 @@ export default function LoginPageScreen() {
   return (
     <LoginStack.Navigator initialRouteName="Main">
       <LoginStack.Screen
-        name="Main"
+        name="LoginMain"
         component={MainScreen}
         options={{ headerShown: false }}
       />
