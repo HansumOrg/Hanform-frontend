@@ -9,6 +9,30 @@ export interface StackParamList extends ParamListBase {
   MyPage: undefined;
 }
 
-export interface HomeScreenProps {
-  navigation: NativeStackNavigationProp<StackParamList, 'Home'>;
+export interface LoginStackParamList extends ParamListBase {
+  Main: undefined;
+  Login: undefined;
+  Register: undefined;
+}
+
+export interface ScreenProps {
+  navigation: NativeStackNavigationProp<StackParamList, keyof StackParamList>;
+}
+
+export interface LoginScreenProps {
+  navigation: NativeStackNavigationProp<
+    StackParamList,
+    keyof LoginStackParamList
+  >;
+}
+
+/*
+components > form types 
+*/
+export interface InputBoxProps {
+  title: string;
+  className?: string | undefined;
+  placeholder?: string | undefined;
+  value?: string;
+  onChangeText?: ((text: string) => void) | undefined;
 }

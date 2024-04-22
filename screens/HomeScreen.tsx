@@ -7,9 +7,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import { HomeScreenProps } from '../types';
+import { ScreenProps } from '../types';
 
-export default function HomeScreen(props: HomeScreenProps) {
+export default function HomeScreen(props: ScreenProps) {
   const { navigation } = props;
   return (
     <SafeAreaView>
@@ -17,16 +17,8 @@ export default function HomeScreen(props: HomeScreenProps) {
       <ScrollView>
         <View className="bg-white flex h-screen items-center">
           <Pressable
-            className="w-full bg-red-300"
-            onPress={() => navigation.navigate('Register')}
-          >
-            <Text className="text-center text-2xl font-bold text-white">
-              회원가입
-            </Text>
-          </Pressable>
-          <Pressable
             className="w-full bg-red-500"
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => navigation.navigate('LoginPage')}
           >
             <Text className="text-center text-2xl font-bold text-white">
               로그인
