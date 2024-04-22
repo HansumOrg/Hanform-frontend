@@ -5,6 +5,7 @@ import { MainStackParamList } from '../types';
 import SurveyCreatePage from './createsurvey/SurveyCreatePage';
 import MainListPage from './mainlistscreens/MainListPage';
 import DelMySurvey from './dellistpage/DelMySurvey';
+import AnswerSurvey from './answersurvey/AnswerSurvey';
 
 
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -21,6 +22,7 @@ export default function MainPageScreen() {
       <Stack.Screen name="SurveyCreatePage" component={SurveyCreatePage} />
       <Stack.Screen name="DelMy" component={SurveyCreatePage} />
       <Stack.Screen name="DelMySurvey" component={DelMySurvey} />
+      <Stack.Screen name="AnswerSurvey" component={AnswerSurvey} />
     </Stack.Navigator>
   );
 }

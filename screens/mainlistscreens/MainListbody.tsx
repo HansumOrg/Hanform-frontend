@@ -26,7 +26,7 @@ function ViewAllList(props: MainListPageScreenProps) {
              <ScrollView className="flex w-full ">
                     <View className="flex flex-col items-center  mt-5 ">
                             <View className="pb-6 flex flex-col space-y-2 h-1/2 items-center mb-10">
-                                <OtherList/>
+                                <OtherList navigation={navigation}/>
                             </View>
                             {/*여기에 원래는 구분되어야 하지 않나요? 배경이 회색이니*/}
                             
