@@ -7,9 +7,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import { ScreenProps } from '../types';
+import { HomeScreenProps } from '../types';
 
-export default function HomeScreen(props: ScreenProps) {
+export default function HomeScreen(props: HomeScreenProps) {
   const { navigation } = props;
   return (
     <SafeAreaView>

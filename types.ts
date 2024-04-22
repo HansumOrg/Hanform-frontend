@@ -1,12 +1,17 @@
 import { ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export interface StackParamList extends ParamListBase {
+export interface HomeStackParamList extends ParamListBase {
   Home: undefined;
   Register: undefined;
   Login: undefined;
   MainPage: undefined;
   MyPage: undefined;
+}
+
+export interface MainStackParamList extends ParamListBase {
+  Main: undefined;
+  Survey: undefined;
 }
 
 export interface LoginStackParamList extends ParamListBase {
@@ -15,13 +20,16 @@ export interface LoginStackParamList extends ParamListBase {
   Register: undefined;
 }
 
-export interface ScreenProps {
-  navigation: NativeStackNavigationProp<StackParamList, keyof StackParamList>;
+export interface HomeScreenProps {
+  navigation: NativeStackNavigationProp<
+    HomeStackParamList,
+    keyof HomeStackParamList
+  >;
 }
 
 export interface LoginScreenProps {
   navigation: NativeStackNavigationProp<
-    StackParamList,
+    LoginStackParamList,
     keyof LoginStackParamList
   >;
 }
@@ -35,4 +43,8 @@ export interface InputBoxProps {
   placeholder?: string | undefined;
   value?: string;
   onChangeText?: ((text: string) => void) | undefined;
+}
+
+export interface MainPageScreenProps {
+  navigation: NativeStackNavigationProp<MainStackParamList, 'Main'>;
 }

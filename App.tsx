@@ -6,9 +6,9 @@ import HomeScreen from './screens/HomeScreen';
 import LoginPageScreen from './screens/LoginPageScreen';
 import MainPageScreen from './screens/MainPageScreen';
 import MyPageScreen from './screens/MyPageScreen';
-import { StackParamList } from './types';
+import { HomeStackParamList } from './types';
 
-const Stack = createNativeStackNavigator<StackParamList>();
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 export default function App() {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -44,18 +44,18 @@ export default function App() {
 
   const NavigationScreen = (
     <NavigationContainer>
-      <Stack.Navigator
+      <HomeStack.Navigator
         initialRouteName="Home"
         screenOptions={{
           headerShown: false, // 페이지의 헤더를 숨깁니다.
         }}
       >
         {/* HomeScreen은 개발용 홈 화면입니다. */}
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="LoginPage" component={LoginPageScreen} />
-        <Stack.Screen name="MainPage" component={MainPageScreen} />
-        <Stack.Screen name="MyPage" component={MyPageScreen} />
-      </Stack.Navigator>
+        <HomeStack.Screen name="Home" component={HomeScreen} />
+        <HomeStack.Screen name="LoginPage" component={LoginPageScreen} />
+        <HomeStack.Screen name="MainPage" component={MainPageScreen} />
+        <HomeStack.Screen name="MyPage" component={MyPageScreen} />
+      </HomeStack.Navigator>
     </NavigationContainer>
   );
 
