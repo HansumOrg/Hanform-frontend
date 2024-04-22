@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, ScrollView, StatusBar, View, Text } from 'react-native';
-import HomeIcon from '../assets/images/icon_home.svg'
-import MypageIcon from '../assets/images/icon_mypage.svg'
+import HomeIcon from '../../assets/images/icon_home.svg'
+import MypageIcon from '../../assets/images/icon_mypage.svg'
 
 function Footer() {
     return (

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Pressable, TextInput, View } from 'react-native';
-import LeftButton from '../assets/images/chevron-left.svg';
-import PencilIcon from '../assets/images/icon_pencil.svg';
-import ViewIcon from '../assets/images/icon_eye.svg';
+import LeftButton from '../../assets/images/chevron-left.svg';
+import PencilIcon from '../../assets/images/icon_pencil.svg';
+import ViewIcon from '../../assets/images/icon_eye.svg';
 import { NavigationProp } from '@react-navigation/native';
 
 interface HeaderProps {
@@ -19,7 +19,7 @@ function Header({navigation}: HeaderProps) {
                 </Pressable>
             </View>
             <View className="flex flex-col w-[70%] h-full justify-center">
-                <TextInput className="text-[25px]" editable={is_editable} ></TextInput>
+                <TextInput className="text-[22px]" editable={is_editable} placeholder="설문지 제목을 입력하세요."></TextInput>
             </View>
             <View className="flex flex-col h-full w-auto justify-center">
                 <Pressable onPress={() => {is_editable ? is_editable : setIsEditable(!is_editable)}}>
