@@ -7,11 +7,16 @@ export interface HomeStackParamList extends ParamListBase {
   Login: undefined;
   MainPage: undefined;
   MyPage: undefined;
+  
+
 }
 
 export interface MainStackParamList extends ParamListBase {
+    CreateSurvey: undefined;
+    MainList: undefined;
     Main: undefined;
     Survey: undefined;
+    DelMySurvey: undefined;
 }
 
 export interface HomeScreenProps {
@@ -22,3 +27,10 @@ export interface MainPageScreenProps {
   navigation: NativeStackNavigationProp<MainStackParamList, 'Main'>;
 }
 
+export interface SurveyCreatePageProps {
+  navigation: NativeStackNavigationProp<MainStackParamList, 'CreateSurvey'>;
+}
+
+export interface MainListPageScreenProps {
+  navigation: NativeStackNavigationProp<MainStackParamList, 'MainList'>;
+}
